@@ -1,6 +1,7 @@
 from functools import reduce
 import json
 from pprint import pprint
+from random import randint
 
 
 class VirtualMachine:
@@ -8,52 +9,85 @@ class VirtualMachine:
     def __init__(self,config):
         with open(config) as data_file:
             data = json.load(data_file)
-            row = data["map"]["rows"]
-            col = data["map"]["columns"]
-            start = data["map"]["start"]
-            no_treasures = data["map"]["number_of_treasures"]
-            treasures = data["map"]["treasures"]
+            self.row = data["map"]["rows"]
+            self.col = data["map"]["columns"]
+            self.start = data["map"]["start"]
+            self.no_treasures = data["map"]["number_of_treasures"]
+            self.treasures = data["map"]["treasures"]
+            self.instruction_count = data["inst_count"]
 
     def decoder(self, code):
         counter = 0
         pc = 0
+        position = self.start
+        steps = []
 
-        def inc(address):
-            if(code[address] < 255):
+        def inc():
+            if code[address] < 255:
                 code[address] += 1
             else:
                 code[address] = 0
 
-        def dec(address):
-            if(code[address] == 0):
+        def dec():
+            if code[address] == 0:
                 code[address] = 255
             else:
                 code[address] -= 1
 
-        def print_result(address):
+        def move(direction):
+            if direction == 'H':
+                position[1] += 1
+                if position[1] <= 0:
+                    return False
+
+        def print_result():
             step = str(bin(code[address]))[2:].count('1')
             if step < 3:
-                print('H')
+                position[1] -= 1
+                if position[1] < 0:
+                    return False
+                ##else kontroluj poklady
+                else:
+                    steps.append('H')
             elif step < 5:
-                print('D')
+                position[1] += 1
+                if position[1] >= self.row:
+                    return False
+                ##else zvys kroky a poklady
+                else:
+                    steps.append('D')
             elif step < 7:
-                print('P')
+                position[0] += 1
+                if position[0] >= self.col:
+                    return False
+                ##else zvys kroky a kontroluj poklady
+                else:
+                    steps.append('P')
             else:
-                print('L')
+                position[0] -= 1
+                if position[0] < 0:
+                    return False
+                ##else zvys kroky a kontroluj poklady
+                else:
+                    steps.append('L')
 
-        while counter < 501 and pc < 4:
+        while counter < 501 and pc < self.instruction_count:
             instruction = code[pc] >> 6
             address = code[pc] & int("00111111", 2)
             pc += 1
             if instruction == 0:
-                inc(address)
+                inc()
             elif instruction == 1:
-                print("dec")
+                dec()
             elif instruction == 2:
                 pc = address
             elif instruction == 3:
-                print_result(address)
+                if not print_result():
+                    return steps
             counter += 1
+        return steps
 
 a = VirtualMachine('config.json')
-a.decoder([int("00000000",2), int("11000001",2), int("00000001",2), int("11000001",2)])
+code = [randint(0,255) for x in range(0,64)]
+print(code)
+print(a.decoder(code))
