@@ -1,0 +1,14 @@
+{
+  "map":{
+    "rows": 7,
+    "columns": 7,
+    "start": [3,6],
+    "number_of_treasures":5,
+    "treasures":[
+      [1,4],
+      [2,2],
+      [4,1],
+      [6,3]
+    ]
+  }
+}
