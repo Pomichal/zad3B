@@ -1,5 +1,7 @@
 {
   "inst_count": 64,
+  "score_per_treasure" : 100,
+  "score_per_step": -1,
   "map":{
     "rows": 7,
     "columns": 7,
