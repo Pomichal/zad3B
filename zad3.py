@@ -92,10 +92,10 @@ class VirtualMachine:
                 pc = address
             elif instruction == 3:
                 if print_result() == False:
-                    steps[0] -= self.score_per_treasure * len(place_of_treasures)
+                    #steps[0] -= self.score_per_treasure * len(place_of_treasures)
                     return steps
             counter += 1
-        steps[0] -= self.score_per_treasure * len(place_of_treasures)
+        #steps[0] -= self.score_per_treasure * len(place_of_treasures)
         return steps
 
 
@@ -104,6 +104,9 @@ code2 = [randint(0,255) for x in range(0,64)]
 print(code2)
 #code = [198, 70, 10, 247, 57, 235, 12, 36, 235, 63, 88, 240, 247, 93, 201, 191, 135, 126, 238, 2, 42, 23, 20, 144, 64, 184, 230, 181, 238, 168, 201, 216, 130, 55, 26, 203, 174, 61, 168, 56, 146, 83, 244, 251, 16, 109, 153, 15, 61, 9, 250, 16, 22, 26, 17, 12, 233, 193, 31, 30, 244, 162, 248, 170]
 #code = [142, 138, 169, 93, 191, 104, 188, 98, 39, 159, 166, 52, 246, 189, 80, 72, 132, 16, 123, 151, 73, 170, 4, 125, 193, 127, 196, 131, 111, 138, 241, 191, 30, 107, 93, 143, 177, 85, 96, 49, 33, 221, 73, 97, 213, 80, 40, 178, 89, 239, 101, 83, 183, 69, 169, 44, 25, 127, 56, 202, 80, 249, 38, 108]
+#code = [212, 75, 78, 55, 237, 44, 113, 205, 180, 77, 65, 240, 89, 18, 198, 67, 126, 228, 101, 195, 2, 95, 3, 57, 167, 122, 115, 228, 249, 19, 198, 109, 39, 105, 222, 21, 46, 124, 196, 240, 15, 8, 195, 202, 7, 221, 118, 150, 133, 13, 83, 196, 225, 29, 221, 167, 174, 58, 110, 30, 13, 5, 80, 236]
 
-
-print(a.decoder(code2))
+code2.insert(0,a.decoder(code2))
+# print(code2)
+# print(code2[0])
+# print(code2[0][0])
