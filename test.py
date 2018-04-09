@@ -4,7 +4,7 @@ import unittest
 
 class GeneratorTests(unittest.TestCase):
 
-    def test_cut(self):
+    def test_virtual_do_not_change_the_code(self):
         codes = [[198, 70, 10, 247, 57, 235, 12, 36, 235, 63, 88, 240, 247, 93, 201, 191, 135, 126, 238, 2, 42, 23, 20, 144, 64, 184, 230, 181, 238, 168, 201, 216, 130, 55, 26, 203, 174, 61, 168, 56, 146, 83, 244, 251, 16, 109, 153, 15, 61, 9, 250, 16, 22, 26, 17, 12, 233, 193, 31, 30, 244, 162, 248, 170],
                 [142, 138, 169, 93, 191, 104, 188, 98, 39, 159, 166, 52, 246, 189, 80, 72, 132, 16, 123, 151, 73, 170, 4, 125, 193, 127, 196, 131, 111, 138, 241, 191, 30, 107, 93, 143, 177, 85, 96, 49, 33, 221, 73, 97, 213, 80, 40, 178, 89, 239, 101, 83, 183, 69, 169, 44, 25, 127, 56, 202, 80, 249, 38, 108],
                 [212, 75, 78, 55, 237, 44, 113, 205, 180, 77, 65, 240, 89, 18, 198, 67, 126, 228, 101, 195, 2, 95, 3, 57, 167, 122, 115, 228, 249, 19, 198, 109, 39, 105, 222, 21, 46, 124, 196, 240, 15, 8, 195, 202, 7, 221, 118, 150, 133, 13, 83, 196, 225, 29, 221, 167, 174, 58, 110, 30, 13, 5, 80, 236],
@@ -15,7 +15,45 @@ class GeneratorTests(unittest.TestCase):
                 [179, 236, 7, 58, 81, 151, 77, 70, 130, 44, 122, 90, 95, 168, 78, 162, 255, 187, 248, 70, 225, 17, 2, 205, 236, 221, 236, 48, 1, 18, 33, 240, 238, 168, 82, 20, 44, 44, 108, 54, 157, 86, 13, 158, 233, 186, 96, 6, 185, 60, 7, 223, 54, 14, 111, 80, 186, 61, 123, 101, 84, 103, 163, 246],
                 [0,[],94, 63, 104, 143, 202, 111, 115, 112, 246, 161, 50, 64, 20, 176, 231, 135, 103, 52, 8, 247, 249, 36, 100, 144, 221, 241, 243, 179, 231, 195, 231, 146, 72, 93, 66, 137, 15, 35, 149, 198, 52, 124, 91, 238, 116, 87, 192, 11, 39, 213, 10, 9, 30, 87, 195, 32, 108, 251, 44, 166, 25, 170, 24, 169],
                 [0,[],193, 48, 10, 221, 239, 80, 48, 74, 239, 244, 32, 153, 124, 121, 89, 9, 107, 107, 154, 125, 84, 89, 156, 166, 120, 79, 241, 174, 44, 28, 111, 35, 121, 20, 161, 165, 95, 171, 173, 194, 136, 78, 149, 104, 180, 227, 157, 2, 31, 123, 40, 93, 219, 136, 99, 48, 113, 92, 39, 198, 140, 72, 209, 20]]
-        (self.assertEqual(code[2:],z.fitness(code)[2:]) for code in codes)
+        # self.assertEqual(code[2:],z.fitness(code)[2:]) for code in codes
+        for code in codes:
+            self.assertEqual(code[2:], z.fitness(code)[2:])
+
+    def test_solution(self):
+        winners = z.evolution()
+        treasures = z.treasures
+
+        def helper_control():
+            if position[0] < 0 or position[0] > z.col or position[1] < 0 or position[1] >= z.row:
+                return False
+            else:
+                return True
+
+        def check_treasures(place):
+            if len(list(filter(lambda pl: pl != place, treasures))) < len(treasures):
+                treasures.remove(next(filter(lambda pl: pl == place, treasures)))
+            return treasures
+
+        count = 0
+        while not winners and count < 5:
+            count += 1
+            winners = z.evolution()
+        position = [z.startx,z.starty]
+        directions = {'H':[1,-1],
+                      'D':[1,1],
+                      'L':[0,-1],
+                      'P':[0,1]}
+
+        if count <= 5 :
+            return
+        # m = map(lambda move: directions[move],winnners) for win in winners
+        for win in winners:
+            m = list(map(lambda move: directions[move], win))
+            for step in m:
+                position[step[0]] += step[1]
+                self.assertEqual(True,helper_control())
+                check_treasures(position)
+        self.assertEqual(0,len(treasures))
 
 
 if __name__ == '__main__':
