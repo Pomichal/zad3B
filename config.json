@@ -1,6 +1,9 @@
 {
+  "NoOfChildren": 20,
+  "survive": 3,
   "inst_count": 64,
-  "score_per_treasure" : 100,
+  "mutation_prob": 0.005,
+  "score_per_treasure" : 1000,
   "score_per_step": -1,
   "map":{
     "rows": 7,
@@ -11,7 +14,8 @@
       [1,4],
       [2,2],
       [4,1],
-      [6,3]
+      [6,3],
+      [4,5]
     ]
   }
 }
