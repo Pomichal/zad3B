@@ -1,6 +1,8 @@
 import zad3 as z
 # from itertools import islice
 import unittest
+import random as rand
+
 
 class GeneratorTests(unittest.TestCase):
 
@@ -20,7 +22,9 @@ class GeneratorTests(unittest.TestCase):
             self.assertEqual(code[2:], z.fitness(code)[2:])
 
     def test_solution(self):
-        winners = z.evolution()
+        codes = [list((rand.randint(0, 255) for x in range(0, z.instruction_count))) for y in range(z.generation_size)]
+        steps = 250
+        winners = z.evolution(codes,steps)
         treasures = z.treasures
 
         def helper_control():
@@ -34,18 +38,17 @@ class GeneratorTests(unittest.TestCase):
                 treasures.remove(next(filter(lambda pl: pl == place, treasures)))
             return treasures
 
-        count = 0
-        while not winners and count < 5:
-            count += 1
-            winners = z.evolution()
+        while not winners and steps < 500:
+            winners = z.evolution(codes,steps)
+            steps += 50
         position = [z.startx,z.starty]
         directions = {'H':[1,-1],
                       'D':[1,1],
                       'L':[0,-1],
                       'P':[0,1]}
 
-        if count <= 5 :
-            return
+        if steps >= 500 :
+            return False
         # m = map(lambda move: directions[move],winnners) for win in winners
         for win in winners:
             m = list(map(lambda move: directions[move], win))
@@ -55,6 +58,9 @@ class GeneratorTests(unittest.TestCase):
                 check_treasures(position)
         self.assertEqual(0,len(treasures))
 
+    def test_10_solutions(self):
+        for t in range(10):
+            self.assertEqual(True,self.test_solution())
 
 if __name__ == '__main__':
     unittest.main()

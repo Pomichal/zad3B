@@ -1,11 +1,9 @@
 {
   "NoOfChildren": 100,
-  "generation_count": 250,
   "survive": 10,
   "inst_count": 64,
-  "cross_prob": 0.8,
-  "mutation1_prob": 0.1,
-  "mutation2_prob": 0.2,
+  "mutation1_prob": 0.05,
+  "mutation2_prob": 0.05,
   "mutation3_prob": 0.2,
   "score_per_treasure" : 1000,
   "score_per_step": -1,
