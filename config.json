@@ -1,14 +1,18 @@
 {
-  "NoOfChildren": 20,
-  "survive": 3,
+  "NoOfChildren": 100,
+  "survive": 10,
   "inst_count": 64,
-  "mutation_prob": 0.005,
+  "cross_prob": 0.8,
+  "mutation1_prob": 0.1,
+  "mutation2_prob": 0.2,
+  "mutation3_prob": 0.3,
   "score_per_treasure" : 1000,
   "score_per_step": -1,
   "map":{
     "rows": 7,
     "columns": 7,
-    "start": [3,6],
+    "startx": 3,
+    "starty": 6,
     "number_of_treasures":5,
     "treasures":[
       [1,4],
