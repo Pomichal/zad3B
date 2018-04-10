@@ -1,10 +1,10 @@
 {
   "NoOfChildren": 100,
-  "survive": 10,
+  "survive": 4,
   "inst_count": 64,
-  "mutation1_prob": 0.05,
+  "mutation1_prob": 0.1,
   "mutation2_prob": 0.05,
-  "mutation3_prob": 0.2,
+  "mutation3_prob": 0.1,
   "score_per_treasure" : 1000,
   "score_per_step": -1,
   "map":{
