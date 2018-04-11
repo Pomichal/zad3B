@@ -26,8 +26,8 @@ class GeneratorTests(unittest.TestCase):
         print("#########")
         print(codes)
         print("#########")
-        steps = 250
-        winners = z.evolution(codes.copy(),steps)
+        steps = 500
+        winners = z.evolution(codes.copy(),steps,draw=0)
         treasures = z.treasures
 
         def helper_control():
@@ -41,29 +41,27 @@ class GeneratorTests(unittest.TestCase):
                 treasures.remove(next(filter(lambda pl: pl == place, treasures)))
             return treasures
 
-        while not winners and steps < 500:
-            winners = z.evolution(codes.copy(),steps)
-            steps += 50
+        # while not winners and steps < 500:
+        winners = z.evolution(codes.copy(),steps)
+            # steps += 50
         position = [z.startx,z.starty]
         directions = {'H':[1,-1],
                       'D':[1,1],
                       'L':[0,-1],
                       'P':[0,1]}
 
-        if steps >= 500 :
-            return False
+        # if steps >= 500 :
+        #     return False
         # m = map(lambda move: directions[move],winnners) for win in winners
-        for win in winners:
-            m = list(map(lambda move: directions[move], win))
-            for step in m:
-                position[step[0]] += step[1]
-                self.assertEqual(True,helper_control())
-                check_treasures(position)
-        self.assertEqual(0,len(treasures))
+        if winners:
+            for win in winners:
+                m = list(map(lambda move: directions[move], win))
+                for step in m:
+                    position[step[0]] += step[1]
+                    self.assertEqual(True,helper_control())
+                    check_treasures(position)
+                self.assertEqual(0,len(treasures))
 
-    # def test_10_solutions(self):
-    #     for t in range(10):
-    #         self.assertNotEqual(False,self.test_solution())
 
 if __name__ == '__main__':
     unittest.main()

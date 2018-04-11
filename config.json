@@ -1,9 +1,11 @@
 {
   "NoOfChildren": 100,
-  "survive": 4,
+  "Stagnation_len": 50,
+  "Stagnation_range": 300,
+  "survive": 5,
   "inst_count": 64,
   "mutation1_prob": 0.1,
-  "mutation2_prob": 0.05,
+  "mutation2_prob": 0.01,
   "mutation3_prob": 0.1,
   "score_per_treasure" : 1000,
   "score_per_step": -1,
